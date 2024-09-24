@@ -2,9 +2,6 @@ var fNum = document.getElementById('txtnumero')
 var resultado = document.getElementById('resultado')
 var selBanco = document.getElementById('selbanco')
 var numeros = []
-var soma = 0
-var media = 0
-
 
 function isNumero(n){
     if(Number(n) >= 1 && Number(n) <= 100){
@@ -16,42 +13,49 @@ function isNumero(n){
 }
 
 function inBanco(n, b) {
-    for (var i in b) {
-        if (Number(n) == b[i]) {
-            return true
-        }
-        else {
-            return false
-        }
+    if (b.indexOf(Number(n)) != -1) {
+        return true
+    } else {
+        return false
     }
 }
 
 function adicionar() {
-    if (inBanco(fNum.value, numeros) || !isNumero(fNum.value)) {
-        alert('Digite um número válido e que não esteja na lista!')
+    if(isNumero(fNum.value) && !inBanco(fNum.value, numeros))
+    {
+     numeros.push(Number(fNum.value))
+     let item = document.createElement('option')
+     item.text = "Valor " + fNum.value + " adicionado."
+     selBanco.appendChild(item)   
+     resultado.innerHTML = ''
+    } else {
+        window.alert('Valor inválido ou já presente na lista.')
     }
-    else {
-        var numAdd = Number(fNum.value)
-        numeros.push(numAdd)
-        soma += numAdd
-        var opt = document.createElement('option')
-        opt.text = ('Valor ' + numAdd + ' foi adicionado.')
-        selBanco.appendChild(opt)
-        fNum.value = ''
-        fNum.focus()
-        numeros.sort()
-        numeros.reverse()
-    }
+    fNum.value = ''
+    fNum.focus()
 }
 
-function finalizar() {
-    if (numeros.length == 0) {
-        alert('Digite números antes de finalizar!')
-    }
-    else {
+function finalizar(){
+    if (numeros.length == 0){
+        window.alert('Adicione valores!')
+    } else {
+        let total = numeros.length
+        let soma = 0
+        let maior = numeros[0]
+        let menor = numeros[0]
+        for(let pos in numeros){
+            soma += numeros[pos]
+            if (numeros[pos] > maior)
+                maior = numeros[pos]
+            if (numeros[pos] < menor)
+                menor = numeros[pos]
+        }
+        media = soma / total 
         resultado.innerHTML = ''
-        resultado.innerHTML = ('Ao todo, temos ' + numeros.length + ' números cadastrados. <br> O maior valor informado foi ' + numeros[0] + '.')
-        numeros.sort()
-        resultado.innerHTML += ('<br> O menor valor informado foi ' + numeros[0] + '. <br> Somando todos os valores, temos ' + soma + '. <br> A média de todos os valores é ' + (soma / numeros.length) + '.')
+        resultado.innerHTML += '<p>Ao todo, temos ' + total + ' números cadastrados.</p>'
+        resultado.innerHTML += '<p>O maior número informado foi '  + maior + '.</p>'
+        resultado.innerHTML += '<p>O menor número informado foi '  + menor + '.</p>'
+        resultado.innerHTML += '<p>A média dos números digitados foi '  + media + '.</p>'
+        resultado.innerHTML += '<p>A soma dos números digitados foi ' + soma + '.</p>'
     }
 }
