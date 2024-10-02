@@ -52,7 +52,7 @@ function finalizar(){
         }
         media = soma / total 
         resultado.innerHTML = ''
-        resultado.innerHTML += '<p>Ao todo, temos ' + total + ' números cadastrados.</p>'
+        resultado.innerHTML += `<p>Ao todo, temos ${total} números cadastrados.</p>`
         resultado.innerHTML += '<p>O maior número informado foi '  + maior + '.</p>'
         resultado.innerHTML += '<p>O menor número informado foi '  + menor + '.</p>'
         resultado.innerHTML += '<p>A média dos números digitados foi '  + media + '.</p>'
